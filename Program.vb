@@ -8,12 +8,34 @@
         Else
             If args(1) = "--help" Then
                 Call HelpDialog()
+            ElseIf args(1) = "--add" Then
+                Call InstallPKG()
+            ElseIf args(1) = "--info" Then
+                Call PKGInfo()
+            ElseIf args(1) = "--del" Then
+                Call UninstallPKG()
+            ElseIf args(1) = "--version" Then
+                Call VersionDialog()
+            Else
+                Call UsageDialog()
             End If
         End If
     End Sub
 
 
     Public Sub InstallPKG()
+
+    End Sub
+
+    Public Sub PKGInfo()
+
+    End Sub
+
+    Public Sub UninstallPKG()
+
+    End Sub
+
+    Public Sub VersionDialog()
 
     End Sub
 
