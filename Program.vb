@@ -3,12 +3,12 @@
     Dim args() As String = Environment.GetCommandLineArgs()
 
     Sub Main()
-        If args.Length < 3 Then
+        If args.Length < 2 Then
+            Call UsageDialog()
+        Else
             If args(1) = "--help" Then
                 Call HelpDialog()
             End If
-        Else
-            Call UsageDialog()
         End If
     End Sub
 
