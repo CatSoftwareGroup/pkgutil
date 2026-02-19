@@ -95,6 +95,20 @@ Module Program
 
     Public Sub UninstallPKG()
 
+        If Directory.Exists("\rootfs\etc\packages\" + args(2)) Then
+            Console.WriteLine("Uninstalling " + args(2))
+            Try
+                Dim runscriptinfo As New ProcessStartInfo
+                runscriptinfo.FileName = "\rootfs\etc\packages\" + args(2) + "\uninstall.bat"
+                runscriptinfo.UseShellExecute = True
+                Process.Start(runscriptinfo).WaitForExit()
+                Directory.Delete("\rootfs\etc\packages\" + args(2), True)
+            Catch ex As Exception
+                Console.WriteLine("Error on uninstalling Package: " + ex.Message)
+            End Try
+        Else
+            Console.WriteLine("Package " + args(2) + " is not installed!")
+        End If
     End Sub
 
     Public Sub VersionDialog()
