@@ -1,5 +1,8 @@
-﻿Module Program
+﻿Imports System.IO
+Imports System.IO.Compression
 
+Module Program
+    Dim PROG_VERSION As String = "1.0"
     Dim args() As String = Environment.GetCommandLineArgs()
 
     Sub Main()
@@ -36,7 +39,11 @@
     End Sub
 
     Public Sub VersionDialog()
+        Console.WriteLine("Lukindu Package Utility " + PROG_VERSION)
+    End Sub
 
+    Public Sub InvalidPKG()
+        Console.WriteLine("Invalid Package file!")
     End Sub
 
     Public Sub UsageDialog()
