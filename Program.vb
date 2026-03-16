@@ -56,21 +56,21 @@ Module Program
         Dim Abspath As String
         Dim installdir As String
         Abspath = IO.Path.GetFileNameWithoutExtension(args(2))
-        installdir = "\rootfs\etc\packages\" + Path.GetFileNameWithoutExtension(Abspath)
+        installdir = "\rootfs\usr\packages\" + Path.GetFileNameWithoutExtension(Abspath)
         If Directory.Exists("\rootfs") Then
             Console.WriteLine("Installing " + args(2))
             Try
                 Directory.CreateDirectory(installdir)
-                ZipFile.ExtractToDirectory(Abspath + ".pkg", "\rootfs\etc\package_cache")
-                If My.Computer.FileSystem.FileExists("\rootfs\etc\package_cache\install.bat") Then
+                ZipFile.ExtractToDirectory(Abspath + ".pkg", "\rootfs\usr\package_cache")
+                If My.Computer.FileSystem.FileExists("\rootfs\usr\package_cache\install.bat") Then
                     Dim runscriptinfo As New ProcessStartInfo
-                    runscriptinfo.FileName = "\rootfs\etc\package_cache\install.bat"
+                    runscriptinfo.FileName = "\rootfs\usr\package_cache\install.bat"
                     runscriptinfo.UseShellExecute = True
                     Process.Start(runscriptinfo).WaitForExit()
-                    File.Copy("\rootfs\etc\package_cache\uninstall.bat", installdir + "\uninstall.bat")
-                    File.Copy("\rootfs\etc\package_cache\package.info", installdir + "\package.info")
-                    Directory.Delete("\rootfs\etc\package_cache", True)
-                    Directory.CreateDirectory("\rootfs\etc\package_cache")
+                    File.Copy("\rootfs\usr\package_cache\uninstall.bat", installdir + "\uninstall.bat")
+                    File.Copy("\rootfs\usr\package_cache\package.info", installdir + "\package.info")
+                    Directory.Delete("\rootfs\usr\package_cache", True)
+                    Directory.CreateDirectory("\rootfs\usr\package_cache")
                 Else
                     Call InvalidPKG()
                 End If
@@ -84,9 +84,9 @@ Module Program
 
     End Sub
     Public Sub PKGInfo()
-        If File.Exists("\rootfs\etc\packages\" + args(2) + "\package.info") Then
+        If File.Exists("\rootfs\usr\packages\" + args(2) + "\package.info") Then
             Dim filereader As String
-            filereader = My.Computer.FileSystem.ReadAllText("\rootfs\etc\packages\" + args(2) + "\package.info")
+            filereader = My.Computer.FileSystem.ReadAllText("\rootfs\usr\packages\" + args(2) + "\package.info")
             Console.WriteLine(filereader)
         Else
             Console.WriteLine("Package " + args(2) + " is not installed!")
@@ -95,14 +95,14 @@ Module Program
 
     Public Sub UninstallPKG()
 
-        If Directory.Exists("\rootfs\etc\packages\" + args(2)) Then
+        If Directory.Exists("\rootfs\usr\packages\" + args(2)) Then
             Console.WriteLine("Uninstalling " + args(2))
             Try
                 Dim runscriptinfo As New ProcessStartInfo
-                runscriptinfo.FileName = "\rootfs\etc\packages\" + args(2) + "\uninstall.bat"
+                runscriptinfo.FileName = "\rootfs\usr\packages\" + args(2) + "\uninstall.bat"
                 runscriptinfo.UseShellExecute = True
                 Process.Start(runscriptinfo).WaitForExit()
-                Directory.Delete("\rootfs\etc\packages\" + args(2), True)
+                Directory.Delete("\rootfs\usr\packages\" + args(2), True)
             Catch ex As Exception
                 Console.WriteLine("Error on uninstalling Package: " + ex.Message)
             End Try
